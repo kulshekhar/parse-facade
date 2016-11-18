@@ -4,7 +4,7 @@ library parse_error;
 import 'package:js/js.dart';
 
 @JS('Parse.Error')
-class ParseError extends Error {
+class ParseError {
   /// Parse error code
   external int get code;
 
