@@ -1,4 +1,5 @@
-# parse_facade
+# parse_facade [![Build Status](https://api.travis-ci.org/kulshekhar/parse-facade.svg?branch=master)](https://travis-ci.org/kulshekhar/parse-facade)
+
 
 parse_facade interfaces with Parse's [javascript SDK][parse-js-sdk] for working with [parse-server][parse-server]
 
