@@ -12,6 +12,9 @@ class ParseUser {
     _pu = new ParseUser$();
   }
 
+  /// The name of the class this object belongs to.
+  String get className => _pu.className;
+
   /// The username of this user
   set username(String username) => this.set('username', username);
 
