@@ -5,11 +5,13 @@ import 'package:parse_facade/parse_facade.dart';
 
 void testUser(XHRInterceptor xi) {
   group('Parse User', () {
-    setUp(() {
+    setUp(() async {
       Parse.initialize('appId', 'jsKey');
       Parse.serverURL = 'http://www.example.com';
 
       xi.clear();
+
+      xi.match(M('/logout', {}));
     });
 
     test('is instantiated as expected', () {
@@ -39,8 +41,11 @@ void testUser(XHRInterceptor xi) {
     test('invokes the API to sign a user, without errors', () async {
       xi
         ..matchAll([
-          M('/users',
-              {'username': 'u1', 'password': 'p1', '_ApplicationId': 'appId'})
+          M('/users', {
+            "createdAt": "2016-11-22T16:24:40.953Z",
+            "objectId": "fGrPPvOYxT",
+            "sessionToken": "r:fNuiMqyLV75lp23D9qkVPK0iL"
+          })
         ])
         ..intercept();
 
@@ -49,9 +54,15 @@ void testUser(XHRInterceptor xi) {
         ..password = 'p1';
 
       try {
+        await ParseUser.logOut();
+        expect(ParseUser.current(), isNull);
+
         var result = await u.signUp();
 
-        expect(result.get('_ApplicationId'), equals('appId'));
+        expect(
+            result.get('sessionToken'), equals('r:fNuiMqyLV75lp23D9qkVPK0iL'));
+
+        expect(ParseUser.current(), isNotNull);
       } catch (e) {
         if (e.runtimeType.toString() == "JSObjectImpl") {
           fail(e.message);
@@ -64,15 +75,24 @@ void testUser(XHRInterceptor xi) {
     test('invokes the static API to sign a user, without errors', () async {
       xi
         ..matchAll([
-          M('/users',
-              {'username': 'u1', 'password': 'p1', '_ApplicationId': 'appId'})
+          M('/users', {
+            "createdAt": "2016-11-22T16:24:40.953Z",
+            "objectId": "fGrPPvOYxT",
+            "sessionToken": "r:fNuiMqyLV75lp23D9qkVPK0iL"
+          })
         ])
         ..intercept();
 
       try {
+        await ParseUser.logOut();
+        expect(ParseUser.current(), isNull);
+
         var result = await ParseUser.signUpUser('u1', 'p1');
 
-        expect(result.get('_ApplicationId'), equals('appId'));
+        expect(
+            result.get('sessionToken'), equals('r:fNuiMqyLV75lp23D9qkVPK0iL'));
+
+        expect(ParseUser.current(), isNotNull);
       } catch (e) {
         if (e.runtimeType.toString() == "JSObjectImpl") {
           fail(e.message);
@@ -85,8 +105,13 @@ void testUser(XHRInterceptor xi) {
     test('invokes the API to login, without errors', () async {
       xi
         ..matchAll([
-          M('/login',
-              {'username': 'u1', 'password': 'p1', '_ApplicationId': 'appId'})
+          M('/login', {
+            "createdAt": "2015-12-18T13:41:51.217Z",
+            "objectId": "nq3MUPQLBk",
+            "sessionToken": "r:ZNGxuGCydK275ZeMlEDGDdSQj",
+            "updatedAt": "2015-12-18T13:53:24.651Z",
+            "username": "u1"
+          })
         ])
         ..intercept();
 
@@ -95,9 +120,14 @@ void testUser(XHRInterceptor xi) {
         ..password = 'p1';
 
       try {
+        await ParseUser.logOut();
+        expect(ParseUser.current(), isNull);
+
         var result = await u.logIn();
 
-        expect(result.get('_ApplicationId'), equals('appId'));
+        expect(
+            result.get('sessionToken'), equals('r:ZNGxuGCydK275ZeMlEDGDdSQj'));
+        expect(ParseUser.current(), isNotNull);
       } catch (e) {
         if (e.runtimeType.toString() == "JSObjectImpl") {
           fail(e.message);
@@ -110,15 +140,25 @@ void testUser(XHRInterceptor xi) {
     test('invokes the static API to login, without errors', () async {
       xi
         ..matchAll([
-          M('/login',
-              {'username': 'u1', 'password': 'p1', '_ApplicationId': 'appId'})
+          M('/login', {
+            "createdAt": "2015-12-18T13:41:51.217Z",
+            "objectId": "nq3MUPQLBk",
+            "sessionToken": "r:ZNGxuGCydK275ZeMlEDGDdSQj",
+            "updatedAt": "2015-12-18T13:53:24.651Z",
+            "username": "u1"
+          })
         ])
         ..intercept();
 
       try {
+        await ParseUser.logOut();
+        expect(ParseUser.current(), isNull);
+
         var result = await ParseUser.logInUser('u1', 'p1');
 
-        expect(result.get('_ApplicationId'), equals('appId'));
+        expect(
+            result.get('sessionToken'), equals('r:ZNGxuGCydK275ZeMlEDGDdSQj'));
+        expect(ParseUser.current(), isNotNull);
       } catch (e) {
         if (e.runtimeType.toString() == "JSObjectImpl") {
           fail(e.message);
@@ -129,12 +169,14 @@ void testUser(XHRInterceptor xi) {
     });
 
     test('logs a user out', () async {
+      xi.intercept();
+
       await ParseUser.logOut();
 
       expect(ParseUser.current(), isNull);
     });
 
-    tearDown(() {
+    tearDown(() async {
       xi?.restore();
     });
   });
