@@ -1,7 +1,7 @@
 name: parse_facade
 description: parse_facade interfaces with Parse's javascript SDK for working with parse-server
 version: 0.0.1
-author: Kulshekhar Kabra <kulshekhar@gmail.com>
+author: Kulshekhar Kabra <kulshekhar+dart@gmail.com>
 homepage: https://github.com/kulshekhar/parse-facade
 
 environment:
@@ -9,6 +9,7 @@ environment:
 
 dependencies: 
   js: '^0.6.1'
+  xhr_interceptor_facade: '^0.0.1'
 
 dev_dependencies:
   test: '>=0.12.0 <0.13.0'

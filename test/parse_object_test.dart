@@ -1,9 +1,9 @@
 import 'dart:js';
 import 'package:test/test.dart';
+import 'package:xhr_interceptor_facade/xhr_interceptor_facade.dart';
 
 import 'package:parse_facade/parse_facade.dart';
 
-import 'util/interceptor.dart';
 import 'util/sdk_loader.dart';
 import 'util/store_global.dart';
 
