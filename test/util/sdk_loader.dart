@@ -20,8 +20,8 @@ class ScriptLoader {
   }
 
   loadInterceptor() {
-    var port =
-        new String.fromEnvironment('INTERCEPTOR_PORT', defaultValue: '18000');
+    var port = "18000";
+    //new String.fromEnvironment('INTERCEPTOR_PORT', defaultValue: '18000');
 
     var s1 = new ScriptElement()..src = 'http://localhost:$port/_script.js';
 

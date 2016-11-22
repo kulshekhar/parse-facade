@@ -1,28 +1,15 @@
-import 'dart:js';
-
 import 'package:xhr_interceptor_facade/xhr_interceptor_facade.dart';
 import 'package:test/test.dart';
 
 import 'package:parse_facade/parse_facade.dart';
 
-import 'util/sdk_loader.dart';
-
-main() async {
-  var scriptLoader = new ScriptLoader();
-  if (context['Parse'] == null) {
-    await scriptLoader.loadSDK();
-  }
-  if (context['XHRInterceptor'] == null) {
-    await scriptLoader.loadInterceptor();
-  }
-
+void testUser(XHRInterceptor xi) {
   group('Parse User', () {
-    XHRInterceptor xi;
-
     setUp(() {
       Parse.initialize('appId', 'jsKey');
       Parse.serverURL = 'http://www.example.com';
-      xi = new XHRInterceptor();
+
+      xi.clear();
     });
 
     test('is instantiated as expected', () {
@@ -148,7 +135,6 @@ main() async {
     });
 
     tearDown(() {
-      xi?.clear();
       xi?.restore();
     });
   });

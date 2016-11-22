@@ -1,32 +1,18 @@
-import 'dart:js';
 import 'package:test/test.dart';
 import 'package:xhr_interceptor_facade/xhr_interceptor_facade.dart';
 
 import 'package:parse_facade/parse_facade.dart';
 
-import 'util/sdk_loader.dart';
-import 'util/store_global.dart';
-
-main() async {
-  var scriptLoader = new ScriptLoader();
-  if (context['Parse'] == null) {
-    await scriptLoader.loadSDK();
-  }
-  if (context['XHRInterceptor'] == null) {
-    await scriptLoader.loadInterceptor();
-  }
-  createGlobalStore();
-
+void testObject(XHRInterceptor xi) {
   group('Parse Object', () {
     ParseObject o;
-    XHRInterceptor xi;
 
     setUp(() {
       Parse.initialize('appId', 'jsKey');
       Parse.serverURL = 'http://www.example.com';
       o = new ParseObject('MyClass');
 
-      xi = new XHRInterceptor();
+      xi.clear();
     });
 
     test('is instantiated using just the class name', () {
@@ -118,7 +104,6 @@ main() async {
     });
 
     tearDown(() {
-      xi?.clear();
       xi?.restore();
     });
   });
