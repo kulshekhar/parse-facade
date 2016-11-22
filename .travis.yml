@@ -1,0 +1,15 @@
+language: dart
+
+with_content_shell: true
+
+before_install:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done
+  - wget https://github.com/kulshekhar/http-mocker/releases/download/latest/http-mocker-ubuntu
+  - chmod +x http-mocker-ubuntu
+  - ./http-mocker-ubuntu & &> /dev/null
+  - t=0; until (curl -X POST -H 'Content-Type:application/json' -d '{"response":1}' -i http://localhost:18000 &> /dev/null || test $t -gt 5); do sleep 1; let t=$t+1; done
+
+script:
+  - pub run test

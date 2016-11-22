@@ -28,6 +28,7 @@ class ParseObject$ {
   }
 
   external String get id;
+  external String get className;
   external DateTime get createdAt;
   external DateTime get updatedAt;
 

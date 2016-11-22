@@ -9,8 +9,8 @@ import 'package:parse_facade/parse_facade.dart';
 import 'util/sdk_loader.dart';
 
 main() async {
-  var sdkLoader = new SDKLoader();
-  await sdkLoader.loadSDK();
+  var scriptLoader = new ScriptLoader();
+  await scriptLoader.loadSDK();
 
   group('Parse Initializer', () {
     JsObject nativeParse = context['Parse'];

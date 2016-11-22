@@ -23,6 +23,9 @@ class ParseObject {
   /// The ID of this object, unique within its class.
   String get id => _po.id;
 
+  /// The name of the class this object belongs to.
+  String get className => _po.className;
+
   /// The first time this object was saved on the server.
   DateTime get createdAt => _po.createdAt;
 

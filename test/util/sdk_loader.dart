@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
-class SDKLoader {
+class ScriptLoader {
   loadSDK() {
     Completer completer = new Completer();
     var s = new ScriptElement()
@@ -18,9 +18,20 @@ class SDKLoader {
 
     return completer.future;
   }
+
+  loadInterceptor() {
+    var port =
+        new String.fromEnvironment('INTERCEPTOR_PORT', defaultValue: '18000');
+
+    var s1 = new ScriptElement()..src = 'http://localhost:$port/_script.js';
+
+    document.head.append(s1);
+
+    return s1.onLoad.first;
+  }
 }
 
-const cdnUrl = 'https://npmcdn.com/parse@latest/dist/parse.min.js';
+const cdnUrl = 'https://npmcdn.com/parse/dist/parse.min.js';
 
 const scriptBackup = r'''
 /**
