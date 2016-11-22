@@ -12,7 +12,9 @@ main() async {
   if (context['Parse'] == null) {
     await scriptLoader.loadSDK();
   }
-  await scriptLoader.loadInterceptor();
+  if (context['XHRInterceptor'] == null) {
+    await scriptLoader.loadInterceptor();
+  }
   createGlobalStore();
 
   group('Parse Object', () {
@@ -53,7 +55,7 @@ main() async {
       expect(o.get('f1'), isNull);
     });
 
-    test('saves an object', () async {
+    test('invokes the API to save an object, without errors', () async {
       var attrs = {'f1': 1, 'f2': 'aa', 'f3': true};
       o.setMap(attrs);
 
@@ -79,7 +81,9 @@ main() async {
       }
     });
 
-    test('saves an object with custom attributes', () async {
+    test(
+        'invokes the API to save an object with custom attributes, without errors',
+        () async {
       var attrs = {'f1': 1, 'f2': 'aa', 'f3': true};
       o.setMap(attrs);
 
