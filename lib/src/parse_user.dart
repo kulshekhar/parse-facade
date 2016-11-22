@@ -56,7 +56,7 @@ class ParseUser {
   /// Retrieves the currently logged in ParseUser with a valid session, either
   /// from memory or localStorage, if necessary.
   ///
-  static ParseUser current() => ParseUser$.current();
+  static dynamic current() => ParseUser$.current();
 
   /// Logs in a user with a username (or email) and password. On success,
   /// this saves the session to disk, so you can retrieve the currently logged
