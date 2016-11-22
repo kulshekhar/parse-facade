@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:js';
 
 import 'package:xhr_interceptor_facade/xhr_interceptor_facade.dart';
