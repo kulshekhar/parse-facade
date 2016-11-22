@@ -5,7 +5,7 @@ author: Kulshekhar Kabra <kulshekhar+dart@gmail.com>
 homepage: https://github.com/kulshekhar/parse-facade
 
 environment:
-  sdk: '>=1.0.0 <2.0.0'
+  sdk: '>=1.8.0 <2.0.0'
 
 dependencies: 
   js: '^0.6.1'
